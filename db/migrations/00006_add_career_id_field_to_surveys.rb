@@ -6,6 +6,6 @@ Sequel.migration do
   end
 
   down do
-    drop_foreign_key :career_id, :carreers
+    drop_foreign_key :career_id, :careers
   end
 end
