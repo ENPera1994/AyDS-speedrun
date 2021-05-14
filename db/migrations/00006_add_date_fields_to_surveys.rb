@@ -1,7 +1,7 @@
 Sequel.migration do
   up do
   	alter_table(:surveys) do
-	  add_foreign_key :career_id, :carreers, :null=>false
+	  add_foreign_key :career_id, :careers, :null=>false
 	end
   end
 
