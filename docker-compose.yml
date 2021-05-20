@@ -19,6 +19,13 @@ services:
     # persist data even if container shuts down
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+  testdb:
+    # use latest official postgres version
+    image: postgres
+    env_file:
+      - config/database.test.env
+
 volumes:
   postgres-data:
 
