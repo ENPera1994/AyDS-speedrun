@@ -11,4 +11,4 @@ class Question < Sequel::Model
 		super
 		errors.add(:description, 'cannot be empty') if !description || description.empty?
 	end
-end 
+end
