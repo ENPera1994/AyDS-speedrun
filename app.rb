@@ -1,9 +1,12 @@
 require './models/init.rb'
 
 class App < Sinatra::Base
-  get '/' do                             
+  get '/' do
+    @username = params[:username]
     erb :landing
   end
+
+
 
   get "/hello/:name" do
     @name = params[:name]
@@ -11,8 +14,8 @@ class App < Sinatra::Base
   end
 
   get "/careers" do
-    @careers = Career.all
-    
+    @career = Career.all
+
     erb :careers_index
   end
 
@@ -21,20 +24,20 @@ class App < Sinatra::Base
 
     erb :career
   end
-  
+
   get "/test" do
     @questions = Question.all
-    
-    erb :test    
+
+    erb :test
   end
 
   post "/careers" do
   	data = request.body.read
-    career = Career.new(name: params[:name], description: params[:description] || params['name', 'description']) 
+    career = Career.new(name: params[:name], description: params[:description] || params['name', 'description'])
 
   	if career.save
   		[201, {'Location' => "careers/#{career.id}"}, 'Career succesfully created']
-  	else 
+  	else
   		[500, {}, 'Internal Server Error']
   	end
   end
@@ -55,4 +58,3 @@ class App < Sinatra::Base
     p.description
   end
 end
-
