@@ -1,0 +1,24 @@
+<h1> mark you answers for the following questions </h1>
+
+<!-- shows all questions and the posible choices below each one of them-->
+
+<ul>
+	<% @questions.each do |question| %> 
+	<ol>
+		<li> <%= question.name %> </li> <br>
+		<ul>
+			<%= question.description %> <br>
+			<% question.choices.to_a.each do |choice| %>
+					<%= choice.text %>
+					<form>
+						<input type='checkbox' name='choice.text' value='choice.text'>
+					</form>
+			<% end %>
+		</ul>
+	</ol>
+	<% end %>
+</ul>
+<!-- button for submitting the answers-->
+<form action='/test' method='POST'> <!-- post method for /test is not implemented yet -->
+	<input type='submit' value='Submit'>
+</form>
