@@ -11,36 +11,21 @@ class App < Sinatra::Base
   end
 
   get "/careers" do
-    @career = Career.all
+    @careers = Career.all
     
     erb :careers_index
   end
 
   get '/careers/:id' do
-    career = Career.where(id: params['id']).last
+    @career = Career.where(id: params['id']).last
 
-    "<ul>"
-    "<li> id: #{career.id}" + 
-    "<li> name: #{career.name}" + 
-    "<li> surveys count: #{career.surveys.count}" + 
-    "<li> description: #{career.description}" + 
-    "</ul>"
+    erb :career
   end
-
-  #not working yet, the idea is to show every question with all its attributes
-  # and below each question show the choices available with a checkbox
+  
   get "/test" do
-    @question = Question.all
-    @choice = Choice.all
-    q = @question.map { |question| "<li>" + question.number.to_s + "- " + question.name +
-    "<li>" + question.description + "<li>" + "type: " + question.type + "<li>" +
-    (@choice.select { |c| c.question_id == question.id }.map { |choice| "<li>" + #the problem is in this line, i'm trying to concatenate an array with a string (which is not possible)
-    form = "<form>"                                                              
-    form += "<input type='checkbox' name='choice.text' value='choice.text'>"
-    form += "</form>" 
-    }) }
-    #after this we should make something for saving the choices the user selects and asociating them with the corresponding classes
-    #also we need to store the username at the beggining of the test
+    @questions = Question.all
+    
+    erb :test    
   end
 
   post "/careers" do
@@ -48,7 +33,7 @@ class App < Sinatra::Base
     career = Career.new(name: params[:name], description: params[:description] || params['name', 'description']) 
 
   	if career.save
-  		[201, {'Location' => "careers/#{career.id}"}, 'CREATED']
+  		[201, {'Location' => "careers/#{career.id}"}, 'Career succesfully created']
   	else 
   		[500, {}, 'Internal Server Error']
   	end
