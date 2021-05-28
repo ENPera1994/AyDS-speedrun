@@ -1,0 +1,16 @@
+<h1> listing all created careers </h1>
+
+<form action='/careers' method='POST'>
+	<input type='text' name='name' value='name'>
+	<input type='text' name='description' value='description'>
+	<input type='submit' value='Submit'>
+</form>
+
+<ul> 
+	<% @career.map do |career| %>
+		<li>
+			<a href="careers/<%= career.id %>"> <%= career.name %></a>
+			(<%= career.surveys.count.to_s %>)
+		</li>
+	<% end %>
+</ul>
