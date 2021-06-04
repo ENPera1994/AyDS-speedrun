@@ -14,7 +14,7 @@ class App < Sinatra::Base
   end
 
   get "/careers" do
-    @career = Career.all
+    @careers = Career.all
 
     erb :careers_index
   end
