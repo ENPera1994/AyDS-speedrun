@@ -6,11 +6,11 @@ require 'sequel'
 require 'sinatra'
 
 DB = Sequel.connect(
-   adapter: 'postgres',
-   database: 'vocational-test_test',
-   host: 'testdb',
-   user: 'unicorn',
-   password: 'magic')
+  adapter: 'postgres',
+  database: 'vocational-test_test',
+  host: 'testdb',
+  user: 'unicorn',
+  password: 'magic')
 
 class Minitest::HooksSpec
   def around
