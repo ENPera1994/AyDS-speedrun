@@ -1,24 +1,18 @@
 <h1> mark you answers for the following questions </h1>
 
-<!-- shows all questions and the posible choices below each one of them-->
+<% @questions.each do |question| %>
+  <%= question.name %> <br>
+  <% question.choices.each do |choice| %>
+    <input type="radio" name="choice_id" value=<%= choice.id %>>
+    <span class="checkmark"></span>
+    <label class="container"><%= choice.text %>
+    </label> <br>
+  <% end %>
+  <br> <br>
+<% end %>
 
-<ul>
-	<% @questions.each do |question| %> 
-	<ol>
-		<li> <%= question.name %> </li> <br>
-		<ul>
-			<%= question.description %> <br>
-			<% question.choices.to_a.each do |choice| %>
-					<%= choice.text %>
-					<form>
-						<input type='checkbox' name='choice.text' value='choice.text'>
-					</form>
-			<% end %>
-		</ul>
-	</ol>
-	<% end %>
-</ul>
+
 <!-- button for submitting the answers-->
-<form action='/test' method='POST'> <!-- post method for /test is not implemented yet -->
+<br><br><form action='/test' method='POST'> <!-- post method for /test is not implemented yet -->
 	<input type='submit' value='Submit'>
-</form>
+</form>	
