@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title> Test Vocacional </title>
+        
+    </head>
+
+    <body>
+        <a> <%= @question.number %>) <%= @question.name %> </a> 
+        <a> <%= @question.description %> </a> <br>
+
+        <form action='/responses/<%= @survey_id.to_s %>' method='POST'>
+            <% @question.choices.each do |choice| %>
+                <label class='container'><%= choice.text %>
+                    <input type='radio' name='choice_id' checked='checked' value=<%= choice.id %>>
+                    <span class='checkmark'></span>
+                </label>
+            <% end %>
+            <button class='button' type='submit' name='question_id' value='<%= @question.id %>' > Siguiente </button> 
+        </form>
+        </div>
+    </body>
+</html>
