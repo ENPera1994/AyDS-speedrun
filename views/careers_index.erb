@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<h1> listing all created careers </h1>
+		<link href="style.css" rel="stylesheet" type="text/css">
+		<h1 style="text-align:center;">listing all created careers </h1>
 	</head>
+
 	<body>
 		<!--
 		<form action='/careers' method='POST'>
@@ -11,7 +13,7 @@
 			<input type='submit' value='Submit'>
 		</form>
 		-->
-		<ul> 
+		<ul style="text-align:center;"> 
 			<% @careers.map do |career| %>
 				<li>
 					<a href="careers/<%= career.id %>"> <%= career.name %></a>
