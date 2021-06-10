@@ -41,7 +41,7 @@ class App < Sinatra::Base
 
     get '/questions/:id' do
         if params[:id].to_i > Question.last.id #Check if the last question was asked 
-            redirect "/finish/#{params[:survey_id]}"
+            redirect "/resultado/#{params[:survey_id]}"
         end
         if Question.find(id: params[:id]).nil? #Check if the currect question(id) is nil
             redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}")
