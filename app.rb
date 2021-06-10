@@ -25,11 +25,37 @@ class App < Sinatra::Base
         erb :career
     end
 
-    get "/test" do
-        @questions = Question.all
+    post "/surveys" do
+        data = request.body.read
+        survey = Survey.new(username: params[:username])
 
-        erb :test
+        if survey.save
+            [201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
+        else
+            [500, {}, 'Internal Server Error']
+        end
+        redirect to("/questions/#{Question.first.id}?survey_id=#{survey.id}")
     end
+
+    
+
+    get '/questions/:id' do
+        if params[:id].to_i > Question.last.id #Check if the last question was asked 
+            redirect "/finish/#{params[:survey_id]}"
+        end
+        if Question.find(id: params[:id]).nil? #Check if the currect question(id) is nil
+            redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}")
+        end
+    @question = Question.find(id: params[:id])
+    @survey_id = params[:survey_id]
+    erb :questions
+    end
+
+#    get "/test" do
+#        @questions = Question.all
+
+#        erb :test
+#    end
 
     post "/careers" do
         data = request.body.read

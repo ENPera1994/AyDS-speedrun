@@ -14,10 +14,11 @@
 		<p style="text-align:center;"> Please enter your username </p>
 
 		<div id="centrar-form">
-			<form method="get" action="/test">
-				<input type='text' name='name'>
-				<input type='submit' value='Submit'>
-			</form>
+			<form action='/surveys' method='POST'>
+				<label class='label' for='username'><b>Ingrese nombre de Usuario</b></label> <br>
+				<input type='text' name='username' placeholder='Nombre de Usuario' required>
+				<input class='button' type='submit' value='Guardar'>
+			</form> 
 		</div>
 
 	</body>
