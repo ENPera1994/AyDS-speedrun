@@ -1,0 +1,197 @@
+@font-face{
+	font-family: "BebasNeue";
+	src: url("fonts/BebasNeue.otf");
+	font-weight: normal;
+	font-style: normal;  
+}
+
+
+/*ESTILOS GENERALES*/
+
+*{
+	margin: 0px;
+	padding: 0px; 
+}
+
+body{
+	background: url("background.jpg");
+	font-family: "BebasNeue";
+	color: white;
+	font-size: 25px;
+	font-weight: normal;
+	text-align: center;
+}
+
+.clearfix{
+	float: none;
+	clear: both;
+}
+
+/*CABECERA*/
+
+#header{
+	width: 100%;
+	height: 70px;
+	background-color: black;
+	font-family: "BebasNeue";
+	color: white;
+}
+
+#menu{
+	float: right;
+	height: 70px;
+	background: black;
+}
+
+#menu ul li{
+	font-size: 24px;
+	display: inline-block;
+	margin: 0px 20px 0px 20px;
+	letter-spacing: 1px;
+	line-height: 70px;
+}
+
+#menu ul li a{
+	display: block;
+	color: white;
+	text-decoration: none;
+	transition: all 200ms;
+}
+
+#menu  ul li a:hover{
+	color: #37bcf9;
+	transform: scale(1.2, 1.2);
+}
+
+/*BANNER*/
+
+#banner{
+	height: 100px;
+	margin-top: 60px;
+	line-height: 100px;
+	text-align: center;
+	font-family: "BebasNeue";
+	transition: all 1s;
+}
+
+#banner h1{
+	display: block;
+	font-family: "BebasNeue";
+	font-size: 40px;
+	letter-spacing: 3px;
+	color: white;
+	text-decoration: none;
+	transition: all 1s;
+}
+
+#banner:hover{
+	background-color: #333;
+	border: 10px solid #37bcf9;
+	border-radius: 240px;
+	box-shadow: 0px 0px 10px grey;
+	animation: blink 10s infinite linear;
+}
+
+#banner:hover h1{
+	color: #00538c;
+	text-shadow: 1px 1px 1px black,  1px 2px 1px black, 1px 3px 1px black,  1px 4px 1px black, 1px 5px 1px black, 1px 6px 1px black;
+}
+
+@keyframes blink{
+	0%{
+		border: 10px solid #37bcf9;
+	}
+	25%{
+		border: 10px solid green;
+	}
+	50%{
+		border: 10px solid yellow;
+	}
+	75%{
+		border: 10px solid white;
+	}
+	100%{
+		border: 10px solid #37bcf9;
+	}
+}
+
+/*LOGIN*/
+#login input[type="text"]{
+	display: block;
+	margin: 0px auto;
+	margin-top: 20px;
+	width: 30%;
+	height: 30px;
+	border: 1px solid #ccc;
+	box-shadow: 1px 1px 1px #ccc inset;
+	border-radius: 5px;
+	padding-left: 30px;
+}
+
+#login input[type="text"]:focus{
+	color: #555;
+	box-shadow: 1px 1px 1px grey inset;
+}
+
+#login input[type="submit"],
+#login button{
+	text-align: center;
+	width: 100px;
+	height: 35px;
+	margin-top: 20px;
+	color: white;
+	background: linear-gradient(to bottom, #3eb8e5 0%, #2ca0ca 100%);
+	border: 1px solid #156785;
+	border-radius: 0px;
+	cursor: pointer;
+	font-size: 15px;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	font-weight: lighter;
+	margin-left: 17px;
+	margin-bottom: 20px;
+	transition: all 200ms;
+}
+
+#login input[type="submit"]:hover,
+#login button:hover{
+	box-shadow: 0px 0px 3px grey;
+}
+
+#login a{
+	display: block;
+	font-size: 15px;
+	text-decoration: none;
+	margin-left: 18px;
+	color: #555;
+}
+
+#login a:hover{
+	text-decoration: underline;
+	color: #2f78bc;
+}
+
+/*RESULTADO*/
+#resultado{
+	color: rgb(255, 2, 2);
+	font-size: 40px;
+	text-shadow: 0px 0px 10px black;
+}
+
+
+#next{
+	text-align: center;
+	width: 100px;
+	height: 35px;
+	margin-top: 20px;
+	color: white;
+	background: linear-gradient(to bottom, #3eb8e5 0%, #2ca0ca 100%);
+	border: 1px solid #156785;
+	border-radius: 0px;
+	cursor: pointer;
+	font-size: 15px;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	font-weight: lighter;
+	margin-left: 17px;
+	margin-bottom: 20px;
+	transition: all 200ms;
+}

@@ -2,21 +2,33 @@
 <html>
 	<head>
 		<title>Vocational Test Speed Run</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<h1 style="text-align:center;">Welcome to AyDS speed run </h1>
-		<hr>
+		<link rel='stylesheet' type='text/css' href='/styles.css'/>
 
 	</head>
 
 	<body>
+
+		<header id="header">
+			<nav id="menu">
+				<ul>
+					<li><a href="/careers">CARRERAS</a></li>
+					<li><a href="https://github.com/ENPera1994/AyDS-speedrun">CODIGO FUENTE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div id="banner">
+			<h1 >Welcome to AyDS speed run</h1>
+		</div>
+		<br>
+		<br>
 		<p style="text-align:center;"> Hello, this website is about a vocational questionnaire. Do you want to know what career to study?</p><br/>
 
 		<p style="text-align:center;"> Please enter your username </p>
 
-		<div id="centrar-form">
+		<div id="login">
 			<form action='/surveys' method='POST'>
 				<input type='text' name='username' placeholder='Nombre de Usuario' required>
-				<input class='button' type='submit' value='Guardar'>
+				<input class='button' type='submit' value='Continue'>
 			</form> 
 		</div>
 

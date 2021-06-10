@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<h1 style="text-align:center;">listing all careers </h1>
+		<link rel='stylesheet' type='text/css' href='/styles.css'/>
+		<title> career </title>
 	</head>
 	<body
+		<header id="header">
+			<nav id="menu">
+				<ul>
+					<li><a href="/careers">CARRERAS</a></li>
+					<li><a href="https://github.com/ENPera1994/AyDS-speedrun">CODIGO FUENTE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div id="banner">
+			<h1 >Welcome to AyDS speed run</h1>
+		</div>
+		<br>
+		<br>
 		<ul>
 			<% career = @career %>
-			<li> id: <%= career.id %> </li>
+			<!-- <li> id: <%= career.id %> </li> -->
 			<li> name: <%= career.name %> </li>
-			<li> surveys count: <%= career.surveys.count.to_s %> </li>
+			<li> cantidad de resultados count: <%= career.surveys.count.to_s %> </li>
 			<li> description: <%= career.description %> </li>
 		</ul>
 	</body>

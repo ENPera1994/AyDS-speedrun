@@ -40,10 +40,10 @@ class App < Sinatra::Base
     
 
     get '/questions/:id' do
-        #if params[:id].to_i > Question.last.id #Check if the last question was asked 
-        #    redirect "/resultado/#{params[:survey_id]}"
-        #end
-        if Question.find(id: params[:id]).nil? #Check if the currect question(id) is nil
+        if params[:id].to_i > Question.last.id 
+            redirect "/resultado/#{params[:survey_id]}"
+        end
+        if Question.find(id: params[:id]).nil? 
             redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}")
         end
     @question = Question.find(id: params[:id])
@@ -51,22 +51,39 @@ class App < Sinatra::Base
     erb :questions
     end
 
+
+
+    get '/resultado/:survey_id' do
+        @survey = Survey.find(:id => params[:survey_id])
+        hashCareer = Hash.new
+        for i in Career.all
+            hashCareer[i.id] = 0
+        end
+        
+        for i in @survey.responses
+            choice = Choice.find(id: i.choice_id)
+            for l in choice.outcomes
+                hashCareer[l.career_id] = hashCareer[l.career_id] + 1
+            end
+        end
+
+        @survey.update(career_id: hashCareer.key(hashCareer.values.max))
+        @career = Career.find(id: @survey.career_id)
+
+        erb :resultado 
+    end
+
+
     post '/responses/:survey_id' do
         response = Response.create(question_id: params[:question_id], choice_id: params[:choice_id], survey_id: params[:survey_id])
         if response.save
             [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
-            #Redirect us to the next question
+
             redirect to("/questions/#{((response.question_id) + 1)}?survey_id=#{params[:survey_id]}")
         else
             [500, {}, 'Internal Server Error']
         end
     end
-
-#    get "/test" do
-#        @questions = Question.all
-
-#        erb :test
-#    end
 
     post "/careers" do
         data = request.body.read
@@ -84,9 +101,9 @@ class App < Sinatra::Base
         data = JSON.parse request.body.read
         post = Post.new(description: data['desc'])
         if post.save
-        [201, { 'Location' => "posts/#{post.id}" }, 'CREATED']
+            [201, { 'Location' => "posts/#{post.id}" }, 'CREATED']
         else
-        [500, {}, 'Internal Server Error']
+            [500, {}, 'Internal Server Error']
         end
     end
 
@@ -94,4 +111,9 @@ class App < Sinatra::Base
         p = Post.where(id: 1).last
         p.description
     end
+
+    get '/resultado/:survey_id' do
+        erb :resultado
+    end
+
 end

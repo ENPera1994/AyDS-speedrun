@@ -3,14 +3,28 @@
 <html>
     <head>
         <title> Test Vocacional </title>
-        
+        <link rel='stylesheet' type='text/css' href='/styles.css'/>
     </head>
 
     <body>
-        <a> <%= @question.number %> <%= @question.name %> </a> 
+        <header id="header">
+			<nav id="menu">
+				<ul>
+					<li><a href="/careers">CARRERAS</a></li>
+					<li><a href="https://github.com/ENPera1994/AyDS-speedrun">CODIGO FUENTE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div id="banner">
+			<h1 >Test Vocacional</h1>
+		</div>
+        <br>
+		<br>
+        <div id="pregunta">
+            <a> <%= @question.number %> <%= @question.name %> </a> 
 
-        <a> <%= @question.description %> </a> <br>
-
+            <a> <%= @question.description %> </a> <br>
+        </div>
         <form action='/responses/<%= @survey_id.to_s %>' method='POST'>
             <% @question.choices.each do |choice| %>
                     <input type='radio' name='choice_id' checked='checked' value=<%= choice.id %>>
@@ -18,7 +32,7 @@
                     <%= choice.text %>
                     <br>
             <% end %>
-            <button class='button' type='submit' name='question_id' value='<%= @question.id %>' > Siguiente </button> 
+            <button id='next' class='button' type='submit' name='question_id' value='<%= @question.id %>' > Siguiente </button> 
         </form>
         </div>
     </body>

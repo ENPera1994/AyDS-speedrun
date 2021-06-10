@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<h1 style="text-align:center;">listing all created careers </h1>
+		<link rel='stylesheet' type='text/css' href='/styles.css'/>
+		<title>listing all created careers</title>
 	</head>
 
 	<body>
-		<!--
-		<form action='/careers' method='POST'>
-			<input type='text' name='name' value='name'>
-			<input type='text' name='description' value='description'>
-			<input type='submit' value='Submit'>
-		</form>
-		-->
+		<header id="header">
+			<nav id="menu">
+				<ul>
+					<li><a href="/careers">CARRERAS</a></li>
+					<li><a href="https://github.com/ENPera1994/AyDS-speedrun">CODIGO FUENTE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div id="banner">
+			<h1>listing all created careers </h1>
+		</div>
+		<br>
+		<br>
 		<ul style="text-align:center;"> 
 			<% @careers.map do |career| %>
 				<li>
