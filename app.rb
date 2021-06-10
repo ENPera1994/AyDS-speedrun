@@ -15,7 +15,8 @@ class App < Sinatra::Base
 
     get "/careers" do
         @careers = Career.all
-
+        @careers.shift      #first career which is used as default career_id in survey creation is removed
+        
         erb :careers_index
     end
 
@@ -40,15 +41,15 @@ class App < Sinatra::Base
     
 
     get '/questions/:id' do
-        if params[:id].to_i > Question.last.id 
+        if params[:id].to_i > Question.last.id  #checks if there is no more questions to answer
             redirect "/resultado/#{params[:survey_id]}"
         end
-        if Question.find(id: params[:id]).nil? 
-            redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}")
+        if Question.find(id: params[:id]).nil? #if this question_id doesn't belong to any question
+            redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}") #try with question_id + 1
         end
-    @question = Question.find(id: params[:id])
-    @survey_id = params[:survey_id]
-    erb :questions
+        @question = Question.find(id: params[:id])
+        @survey_id = params[:survey_id]
+        erb :questions
     end
 
 
@@ -56,18 +57,18 @@ class App < Sinatra::Base
     get '/resultado/:survey_id' do
         @survey = Survey.find(:id => params[:survey_id])
         hashCareer = Hash.new
-        for i in Career.all
-            hashCareer[i.id] = 0
+        for career in Career.all  #creates a hashmap for careers, using id as key and a count as value
+            hashCareer[career.id] = 0   #initializes every career count as 0
         end
         
-        for i in @survey.responses
-            choice = Choice.find(id: i.choice_id)
-            for l in choice.outcomes
-                hashCareer[l.career_id] = hashCareer[l.career_id] + 1
+        for response in @survey.responses   #for every response to the current survey
+            choice = Choice.find(id: response.choice_id)    #choice selected as response
+            for outcome in choice.outcomes      #for every outcome of the selected choices, add 1 to the career
+                hashCareer[outcome.career_id] = hashCareer[outcome.career_id] + 1   #count in the hashmap
             end
         end
 
-        @survey.update(career_id: hashCareer.key(hashCareer.values.max))
+        @survey.update(career_id: hashCareer.key(hashCareer.values.max))  #sets the career with max count as career of the survey
         @career = Career.find(id: @survey.career_id)
 
         erb :resultado 
