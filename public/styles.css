@@ -195,3 +195,25 @@ body{
 	margin-bottom: 20px;
 	transition: all 200ms;
 }
+
+#pregunta{
+	font-size: 30px;
+	/*display: block;
+	width: 100%;
+	height: 75px;
+	line-height: 75px;
+	text-align: center;
+	font-family: "BebasNeue";
+	font-size: 25px;
+	font-weight: normal;
+	letter-spacing: 2px;
+	background: url("pxgray.png"), white;
+	box-shadow: 0px 1px 0px #393d3f, 1px 2px 0px #393d3f, 2px 3px 0px #393d3f, 3px 4px 0px #393d3f;
+	margin: 0px auto;
+	margin-top: 20px;
+	margin-bottom: 15px;*/
+}
+
+#opcion{
+	text-align: left;
+}
