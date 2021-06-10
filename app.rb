@@ -27,7 +27,7 @@ class App < Sinatra::Base
 
     post "/surveys" do
         data = request.body.read
-        survey = Survey.new(username: params[:username])
+        survey = Survey.new(username: params[:username], career_id: Career.first.id)
 
         if survey.save
             [201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
@@ -40,15 +40,26 @@ class App < Sinatra::Base
     
 
     get '/questions/:id' do
-        if params[:id].to_i > Question.last.id #Check if the last question was asked 
-            redirect "/resultado/#{params[:survey_id]}"
-        end
+        #if params[:id].to_i > Question.last.id #Check if the last question was asked 
+        #    redirect "/resultado/#{params[:survey_id]}"
+        #end
         if Question.find(id: params[:id]).nil? #Check if the currect question(id) is nil
             redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}")
         end
     @question = Question.find(id: params[:id])
     @survey_id = params[:survey_id]
     erb :questions
+    end
+
+    post '/responses/:survey_id' do
+        response = Response.create(question_id: params[:question_id], choice_id: params[:choice_id], survey_id: params[:survey_id])
+        if response.save
+            [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
+            #Redirect us to the next question
+            redirect to("/questions/#{((response.question_id) + 1)}?survey_id=#{params[:survey_id]}")
+        else
+            [500, {}, 'Internal Server Error']
+        end
     end
 
 #    get "/test" do
