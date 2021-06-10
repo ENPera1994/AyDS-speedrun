@@ -70,6 +70,7 @@ Choice.create(text: 'Ninguna de las opciones.', question_id: @questions[14].id)
 
 
 #Create Careers
+Career.create(name: 'null', description: ' ') #This career object will be used to manage disconections or cancellations during the test
 Career.create(name: 'Computacion', description: ' ')
 Career.create(name: 'Veterinaria', description: ' ')
 Career.create(name: 'Agronomia', description: ' ')
