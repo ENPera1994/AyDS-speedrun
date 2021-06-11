@@ -28,9 +28,9 @@ class App < Sinatra::Base
 
     post "/surveys" do
 
-        for survey in Survey.all
-          if survey.career_id == Career.first.id &&  Time.now - survey.created_at >= 3600
-              for response in survey.responses
+        for survey in Survey.all  #destroys all surveys connected with null career, they must have been created
+          if survey.career_id == Career.first.id &&  Time.now - survey.created_at >= 3600 #1 hour ago
+              for response in survey.responses  #deletes every response asociated with the survey
                   response.destroy
               end
               survey.destroy
@@ -38,14 +38,18 @@ class App < Sinatra::Base
         end
 
         data = request.body.read
-        survey = Survey.new(username: params[:username], career_id: Career.first.id)
-
+        survey = Survey.find(username: params[:username]) #stores the survey with this username
+        if survey.nil? || survey.career_id == Career.first.id  #if there was no such survey or the survey is assigned to null
+            survey = Survey.new(username: params[:username], career_id: Career.first.id)    #career we create the new survey 
+        else    #the user has already done the test
+            redirect "/resultado/#{survey.id}"   #user is redirected to its result
+        end
         if survey.save
             [201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
         else
             [500, {}, 'Internal Server Error']
         end
-        redirect to("/questions/#{Question.first.id}?survey_id=#{survey.id}")
+        redirect to("/questions/#{Question.first.id}?survey_id=#{survey.id}")   #the test starts
     end
 
 
