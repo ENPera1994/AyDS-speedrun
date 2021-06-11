@@ -26,6 +26,16 @@ class App < Sinatra::Base
     end
 
     post "/surveys" do
+
+        for survey in Survey.all
+          if survey.career_id == Career.first.id &&  Time.now - survey.created_at >= 3600
+              for response in survey.responses
+                  response.destroy
+              end
+              survey.destroy
+          end
+        end
+
         data = request.body.read
         survey = Survey.new(username: params[:username], career_id: Career.first.id)
 
@@ -37,13 +47,13 @@ class App < Sinatra::Base
         redirect to("/questions/#{Question.first.id}?survey_id=#{survey.id}")
     end
 
-    
+
 
     get '/questions/:id' do
-        if params[:id].to_i > Question.last.id 
+        if params[:id].to_i > Question.last.id
             redirect "/resultado/#{params[:survey_id]}"
         end
-        if Question.find(id: params[:id]).nil? 
+        if Question.find(id: params[:id]).nil?
             redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}")
         end
     @question = Question.find(id: params[:id])
@@ -59,7 +69,7 @@ class App < Sinatra::Base
         for i in Career.all
             hashCareer[i.id] = 0
         end
-        
+
         for i in @survey.responses
             choice = Choice.find(id: i.choice_id)
             for l in choice.outcomes
@@ -70,7 +80,7 @@ class App < Sinatra::Base
         @survey.update(career_id: hashCareer.key(hashCareer.values.max))
         @career = Career.find(id: @survey.career_id)
 
-        erb :resultado 
+        erb :resultado
     end
 
 
