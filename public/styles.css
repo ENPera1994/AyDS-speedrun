@@ -215,5 +215,6 @@ body{
 }
 
 #opcion{
-	text-align: left;
+	text-align: center;
+	margin-left: 30px;
 }
