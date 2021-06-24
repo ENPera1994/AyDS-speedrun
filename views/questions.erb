@@ -21,22 +21,24 @@
 		</div>
         <br>
 		<br>
-        <div id="pregunta">
-            <a> <%= @question.number %> <%= @question.name %> </a> 
-            <a> <%= @question.description %> </a> <br>
-        </div>
-        <br>
-        
         <form action='/responses/<%= @survey_id.to_s %>' method='POST'>
-            <div id="opcion">
-                <% @question.choices.each do |choice| %>
-                        <input type='radio' name='choice_id' checked='checked' value=<%= choice.id %>>
+            <% @questions.map do |question| %>
+                <div id="question">
+                    <a> <%= question.number %> <%= question.name %> </a> 
+                    <a> <%= question.description %> </a> <br>
+                </div>
+                <br>
+                <div id="opcion">
+                    <% question.choices.each do |choice| %> <!--choice_id[] was supposed to store marked radials in an array but im not really sure if this works (not even tested)-->
+                        <input type='radio' name='choice_id[]' checked='checked' value=<%= choice.id %>>
                         <span class='checkmark'></span>
                         <%= choice.text %>
-                        <br>
-                <% end %>
-            </div>
-            <button id='next' class='button' type='submit' name='question_id' value='<%= @question.id %>' > Siguiente </button> 
+                        <br> 
+                    <% end %>
+                    <br> <br> <br>
+                </div>
+            <% end %>
+            <button id='next' class='button' type='submit' name='survey_id' value='<%= @survey_id %>' > Finalizar </button> <br> <br> <!--when pressing this button we should send choice ids of selected items and calculate the best career-->
         </form>
     </body>
 </html>
