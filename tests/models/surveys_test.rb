@@ -18,10 +18,10 @@ class SurveyTest < MiniTest::Unit::TestCase
     # Arrange
     career = Career.create(name: 'c1')
     # Act
-    #survey1 = Survey.create(username: '1') this gives an error during testing, so its ok
+    survey1 = Survey.create(username: '1') this gives an error during testing, so its ok
     survey2 = Survey.create(username: '2', career_id: career.id)
     # Assert
-    #assert_equal(survey1.valid?, false)
+    assert_equal(survey1.valid?, false)
     assert_equal(survey2.valid?, true)
     
   end

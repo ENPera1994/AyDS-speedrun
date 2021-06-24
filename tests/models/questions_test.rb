@@ -14,7 +14,6 @@ class QuestionTest < MiniTest::Unit::TestCase
     # Assert
     assert_equal(question1.valid?, false)
     assert_equal(question2.valid?, false)
-    #assert_equal(question3.valid?, true)
   end
 
 end

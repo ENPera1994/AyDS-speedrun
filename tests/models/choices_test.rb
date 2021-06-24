@@ -30,14 +30,4 @@ class ChoiceTest < MiniTest::Unit::TestCase
     assert_equal(choice.valid?, true)
   end
 
-  #To implement
-  def test_choice_has_many_responses
-    # Arrange
-
-    # Act
-
-    # Assert
-
-  end
-
 end
