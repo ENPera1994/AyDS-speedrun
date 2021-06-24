@@ -76,9 +76,25 @@ class App < Sinatra::Base
             end
         end
 
-        #ways to do this: to_a, 
-        @survey.update(career_id: hashCareer.key(hashCareer.values.max))  #sets the career with max count as career of the survey
-        @career = Career.find(id: @survey.career_id)
+
+        @survey.update(career_id: hashCareer.key(hashCareer.values.max))  #we stablish the career with the max value
+                                                                          # in the hash as the survey career_id
+
+        #we filter the hash leaving only the items whose value is equal to the max value in the hash, their values
+        # are not 0 and that are not the career we asociated to the survey
+        hashCareer.select! {|key,value| value == hashCareer.values.max && value != 0 && key != @survey.career_id }
+        
+        @careers = Array.new    #we create a new array to load careers on it
+        @careers[0] = Career.find(id: @survey.career_id) #we store the career asociated with the survey, this is
+        #just in case all values were 0, in that case we would only want to show the auxiliar career (Career.first)
+        
+        careerCount = hashCareer.to_a #we transform the hash into an array of arrays with key as first value and 
+                                                                                #value as the second element
+        i = 1
+        careerCount.each do |id_count|
+            @careers[i] = Career.find(id: id_count[0]) 
+            i += 1
+        end
 
         erb :result
     end
