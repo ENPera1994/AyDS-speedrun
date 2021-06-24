@@ -84,15 +84,25 @@ class App < Sinatra::Base
 
 
     post '/responses/:survey_id' do
-        params[:question_id].each do |question|#selected_choices = params[:choice_id].all #we need to obtain the array with all the choice ids here and with them we can obtain the questions
-            response = Response.create(question_id: params[:question_id], choice_id: params[:choice_id], survey_id: params[:survey_id])
+        selected_choices = params[:choice_id]
+        selected_choices.each do |id_choice| #for each choice_id in the parameters we get the question
+            #it refeers to, create the response for that choice and load it in the database
+            
+            question_id = Choice.find(id: id_choice).question_id #using the choice id we have, we take the choice 
+            #corresponding to id_choice and obtain from it the question_id it refers
+            
+            #ok, it seems that id_choice is an array, containing in [0] the id of the question it belongs to and
+            #in [1] the id of the choice we selected for question in [0]
+            response = Response.create(question_id: question_id, choice_id: id_choice[1], survey_id: params[:survey_id])
+            
             if response.save
                 [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
             else
                 [500, {}, 'Internal Server Error']
             end
-        
-        redirect to("/result/#{params[:survey_id]}")
+        end
+
+        redirect to("/result/#{params[:survey_id]}") #finally when all responses are created we go to see the result
     end
 
     post "/careers" do
@@ -120,10 +130,6 @@ class App < Sinatra::Base
     get '/posts' do
         p = Post.where(id: 1).last
         p.description
-    end
-
-    get '/result/:survey_id' do
-        erb :result
     end
 
 end

@@ -26,19 +26,21 @@
                 <div id="question">
                     <a> <%= question.number %> <%= question.name %> </a> 
                     <a> <%= question.description %> </a> <br>
-                
-                    <br>
-                    <div id="opcion">
-                        <% question.choices.each do |choice| %> <!--choice_id[] was supposed to store marked radials in an array but im not really sure if this works (not even tested)-->
-                            <input type='radio' name='<%=question.id%>' value='<%=choice.id%>' required> <%=choice.text%>
-                            <br>
-                        <% end %>
-                        <input type='hidden' name='question_id[]' value='<%= question.id %>'>
-                        <br> <br>
-                    </div>
-                
+                </div>
+                <br>
+                <fieldset id="choice_id" name="choice_id[<%=question.id%>]"> <!--choice_id array is enumerated by 
+                    question.id, but it stores choice.id values-->
+                    <% question.choices.each do |choice| %> 
+                        <input type='radio' id='choice_id' name='choice_id[<%=question.id%>]' checked='unchecked' value='<%=choice.id%>' required> 
+                        <%=choice.text%>
+                        <br>
+                    <% end %>
+                    <br> <br>
+                </fieldset>
             <% end %>
-            <button id='next' class='button' type='submit' name='survey_id' value='<%= @survey_id %>' > Finalizar </button> <br> <br> <!--when pressing this button we should send choice ids of selected items and calculate the best career-->
+            <button id='next' class='button' type='submit' name='survey_id' value='<%= @survey_id %>' > Finalizar 
+            </button> <br> <br>
+             <!--when pressing this button we should send choice ids of selected items and calculate the best career-->
         </form>
     </body>
 </html>
