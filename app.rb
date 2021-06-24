@@ -29,12 +29,12 @@ class App < Sinatra::Base
     post "/surveys" do
 
         for survey in Survey.all  #destroys all surveys connected with null career, they must have been created
-          if survey.career_id == Career.first.id &&  Time.now - survey.created_at >= 3600 #1 hour ago
-              for response in survey.responses  #deletes every response asociated with the survey
-                  response.destroy
-              end
-              survey.destroy
-          end
+            if survey.career_id == Career.first.id &&  Time.now - survey.created_at >= 3600 #1 hour ago
+                for response in survey.responses  #deletes every response asociated with the survey
+                    response.destroy
+                end
+                survey.destroy
+            end
         end
 
         data = request.body.read
@@ -84,7 +84,7 @@ class App < Sinatra::Base
 
 
     post '/responses/:survey_id' do
-        selected_choices = params[:choice_id].all #we need to obtain the array with all the choice ids here and with them we can obtain the questions
+        params[:question_id].each do |question|#selected_choices = params[:choice_id].all #we need to obtain the array with all the choice ids here and with them we can obtain the questions
             response = Response.create(question_id: params[:question_id], choice_id: params[:choice_id], survey_id: params[:survey_id])
             if response.save
                 [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
