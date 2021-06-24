@@ -76,6 +76,7 @@ class App < Sinatra::Base
             end
         end
 
+        #ways to do this: to_a, 
         @survey.update(career_id: hashCareer.key(hashCareer.values.max))  #sets the career with max count as career of the survey
         @career = Career.find(id: @survey.career_id)
 
@@ -87,7 +88,7 @@ class App < Sinatra::Base
         selected_choices.each do |question_and_choice| #for each choice_id and the question it refeers to, we will
             #create the response and load it in the database
             
-            response = Response.create(question_id: id_choice[0], choice_id: id_choice[1], survey_id: params[:survey_id])
+            response = Response.create(question_id: question_and_choice[0], choice_id: question_and_choice[1], survey_id: params[:survey_id])
             
             if response.save
                 [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
