@@ -21,8 +21,10 @@
 		<br>
 		<br>
 		<div id="result">
-			<a> Carrera sugerida:  </a>
-			<a href="/careers/<%= @career.id %>"> <%= @career.name %> </a>
+			<a> Carrera/s sugerida/s:  </a> <br>
+			<% @careers.map do |career| %>
+				<a href="/careers/<%= career.id %>"> <%= career.name %> </a> <br>
+			<% end %>
 		</div>
 
 		<br> <br> <br> 
