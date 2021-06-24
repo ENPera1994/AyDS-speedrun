@@ -42,33 +42,27 @@ class App < Sinatra::Base
         if survey.nil? || survey.career_id == Career.first.id  #if there was no such survey or the survey is assigned to null
             survey = Survey.new(username: params[:username], career_id: Career.first.id)    #career we create the new survey 
         else    #the user has already done the test
-            redirect "/resultado/#{survey.id}"   #user is redirected to its result
+            redirect "/result/#{survey.id}"   #user is redirected to its result
         end
         if survey.save
             [201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
         else
             [500, {}, 'Internal Server Error']
         end
-        redirect to("/questions/#{Question.first.id}?survey_id=#{survey.id}")   #the test starts
+        redirect to("/questions?survey_id=#{survey.id}")   #the test starts
     end
 
 
 
-    get '/questions/:id' do
-        if params[:id].to_i > Question.last.id  #checks if there is no more questions to answer
-            redirect "/resultado/#{params[:survey_id]}"
-        end
-        if Question.find(id: params[:id]).nil? #if this question_id doesn't belong to any question
-            redirect to("/questions/#{(params[:id].to_i) + 1}?survey_id=#{params[:survey_id]}") #try with question_id + 1
-        end
-        @question = Question.find(id: params[:id])
+    get '/questions' do
         @survey_id = params[:survey_id]
-        erb :questions
+        @questions = Question.all
+        erb :questions  #shows each question whit its choices
     end
 
 
 
-    get '/resultado/:survey_id' do
+    get '/result/:survey_id' do
         @survey = Survey.find(:id => params[:survey_id])
         hashCareer = Hash.new
         for career in Career.all  #creates a hashmap for careers, using id as key and a count as value
@@ -85,19 +79,20 @@ class App < Sinatra::Base
         @survey.update(career_id: hashCareer.key(hashCareer.values.max))  #sets the career with max count as career of the survey
         @career = Career.find(id: @survey.career_id)
 
-        erb :resultado
+        erb :result
     end
 
 
     post '/responses/:survey_id' do
-        response = Response.create(question_id: params[:question_id], choice_id: params[:choice_id], survey_id: params[:survey_id])
-        if response.save
-            [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
-
-            redirect to("/questions/#{((response.question_id) + 1)}?survey_id=#{params[:survey_id]}")
-        else
-            [500, {}, 'Internal Server Error']
-        end
+        selected_choices = params[:choice_id].all #we need to obtain the array with all the choice ids here and with them we can obtain the questions
+            response = Response.create(question_id: params[:question_id], choice_id: params[:choice_id], survey_id: params[:survey_id])
+            if response.save
+                [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
+            else
+                [500, {}, 'Internal Server Error']
+            end
+        
+        redirect to("/result/#{params[:survey_id]}")
     end
 
     post "/careers" do
@@ -127,8 +122,8 @@ class App < Sinatra::Base
         p.description
     end
 
-    get '/resultado/:survey_id' do
-        erb :resultado
+    get '/result/:survey_id' do
+        erb :result
     end
 
 end
