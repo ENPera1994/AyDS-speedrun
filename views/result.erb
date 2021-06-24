@@ -3,7 +3,7 @@
 	<head>
 		<link rel='stylesheet' type='text/css' href='/styles.css'/>
 		<title> Resultado </title>
-		<link rel="icon" type="favicon/x-icon" href="/icon.png">		
+		<link rel="icon" type="favicon/x-icon" href="/icon.png">
 	</head>
 
 	<body>
@@ -16,13 +16,20 @@
 			</nav>
 		</header>
 		<div id="banner">
-			<h1 >Resultado de tu Test Vocacional</h1>
+			<h1 >Resultado de tu Test Vocacional: <%=@survey.username%></h1>
 		</div>
 		<br>
 		<br>
-		<div id="resultado">
+		<div id="result">
 			<a> Carrera sugerida:  </a>
 			<a href="/careers/<%= @career.id %>"> <%= @career.name %> </a>
 		</div>
-    </body>
+
+		<br> <br> <br> 
+		<div id="homePageButton">
+			<form action='/' method='get'>
+				<input class='button' type='submit' value='Regresar al comienzo'>
+			</form>
+		</div>
+  </body>
 </html>
