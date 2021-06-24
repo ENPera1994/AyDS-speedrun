@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel='stylesheet' type='text/css' href='/styles.css'/>
+		<title> Resultado </title>
+		<link rel="icon" type="favicon/x-icon" href="/icon.png">		
+	</head>
+
+	<body>
+        <header id="header">
+			<nav id="menu">
+				<ul>
+					<li><a href="/careers">CARRERAS</a></li>
+					<li><a href="https://github.com/ENPera1994/AyDS-speedrun">CODIGO FUENTE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div id="banner">
+			<h1 >Resultado de tu Test Vocacional</h1>
+		</div>
+		<br>
+		<br>
+		<div id="resultado">
+			<a> Carrera sugerida:  </a>
+			<a href="/careers/<%= @career.id %>"> <%= @career.name %> </a>
+		</div>
+    </body>
+</html>
