@@ -6,18 +6,22 @@ class App < Sinatra::Base
         erb :landing
     end
 
-
-
-    get "/hello/:name" do
-        @name = params[:name]
-        erb :hello_template
-    end
-
     get "/careers" do
         @careers = Career.all
         @careers.shift      #first career which is used as default career_id in survey creation is removed
 
         erb :careers_index
+    end
+
+    post "/careers" do
+        data = request.body.read
+        career = Career.new(name: params[:name], description: params[:description] || params['name', 'description'])
+
+        if career.save
+            [201, {'Location' => "careers/#{career.id}"}, 'Career succesfully created']
+        else
+            [500, {}, 'Internal Server Error']
+        end
     end
 
     get '/careers/:id' do
@@ -52,15 +56,11 @@ class App < Sinatra::Base
         redirect to("/questions?survey_id=#{survey.id}")   #the test starts
     end
 
-
-
     get '/questions' do
         @survey_id = params[:survey_id]
         @questions = Question.all
         erb :questions  #shows each question whit its choices
     end
-
-
 
     get '/result/:survey_id' do
         @survey = Survey.find(:id => params[:survey_id])
@@ -82,18 +82,12 @@ class App < Sinatra::Base
         erb :result
     end
 
-
     post '/responses/:survey_id' do
-        selected_choices = params[:choice_id]
-        selected_choices.each do |id_choice| #for each choice_id in the parameters we get the question
-            #it refeers to, create the response for that choice and load it in the database
+        selected_choices = params[:choice_id] #array of arrays of ids (first is of question and second of choice)
+        selected_choices.each do |question_and_choice| #for each choice_id and the question it refeers to, we will
+            #create the response and load it in the database
             
-            question_id = Choice.find(id: id_choice).question_id #using the choice id we have, we take the choice 
-            #corresponding to id_choice and obtain from it the question_id it refers
-            
-            #ok, it seems that id_choice is an array, containing in [0] the id of the question it belongs to and
-            #in [1] the id of the choice we selected for question in [0]
-            response = Response.create(question_id: question_id, choice_id: id_choice[1], survey_id: params[:survey_id])
+            response = Response.create(question_id: id_choice[0], choice_id: id_choice[1], survey_id: params[:survey_id])
             
             if response.save
                 [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
@@ -105,15 +99,9 @@ class App < Sinatra::Base
         redirect to("/result/#{params[:survey_id]}") #finally when all responses are created we go to see the result
     end
 
-    post "/careers" do
-        data = request.body.read
-        career = Career.new(name: params[:name], description: params[:description] || params['name', 'description'])
-
-        if career.save
-            [201, {'Location' => "careers/#{career.id}"}, 'Career succesfully created']
-        else
-            [500, {}, 'Internal Server Error']
-        end
+    get '/posts' do
+        p = Post.where(id: 1).last
+        p.description
     end
 
     post "/posts" do
@@ -125,11 +113,6 @@ class App < Sinatra::Base
         else
             [500, {}, 'Internal Server Error']
         end
-    end
-
-    get '/posts' do
-        p = Post.where(id: 1).last
-        p.description
     end
 
 end
