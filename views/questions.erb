@@ -21,7 +21,7 @@
 		</div>
         <br>
 		<br>
-        <form action='/responses/<%= @survey_id.to_s %>' method='POST'>
+        <form action='/responses/<%= @username %>' method='POST'>
             <% @questions.map do |question| %>
                 <div id="question">
                     <a> <%= question.number %> <%= question.name %> </a> 
@@ -38,7 +38,7 @@
                     <br> <br>
                 </fieldset>
             <% end %>
-            <button id='next' class='button' type='submit' name='survey_id' value='<%= @survey_id %>' > Finalizar 
+            <button id='next' class='button' type='submit' name='username' value='<%= @username %>' > Finalizar 
             </button> <br> <br>
             <!--when pressing this button we should send choice ids of selected items and calculate the best career-->
         </form>
