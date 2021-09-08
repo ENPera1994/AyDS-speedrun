@@ -36,7 +36,7 @@ class App < Sinatra::Base
 		survey = Survey.find(username: username) #looks for a survey with this username
 		
 		if !survey.nil? #such survey exists
-			if !survey.career_id == Career.first.id  #the user has already done the test
+			if survey.career_id != Career.first.id  #the user has already done the test
 				redirect "/result/#{survey.id}"   #user is redirected to its result
 			else
 				survey.destroy #it has the null career, so we restart its test
@@ -131,5 +131,3 @@ class App < Sinatra::Base
 	end
 
 end
-
-#comentario de prueba, IGNORAR!
