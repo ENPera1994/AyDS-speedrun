@@ -9,7 +9,7 @@ class Survey < Sequel::Model
 
   def before_destroy
     super
-    for response in survey.responses  #deletes every response asociated with the survey
+    for response in self.responses  #deletes every response asociated with the survey
       response.destroy
     end
   end
