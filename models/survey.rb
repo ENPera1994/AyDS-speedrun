@@ -5,6 +5,7 @@ class Survey < Sequel::Model
 	def validate
     super
     errors.add(:username, 'cannot be empty') if !username || username.empty?
+    errors.add(:career_id, 'cannot be empty') if !career_id 
   end
 
   def before_destroy
