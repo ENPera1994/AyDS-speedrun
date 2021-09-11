@@ -6,5 +6,6 @@ class Choice < Sequel::Model
 	def validate
 		super
 		errors.add(:text, 'cannot be empty') if !text || text.empty?
+		errors.add(:question_id, 'cannot be empty') if !question_id
 	end
 end 
