@@ -21,3 +21,6 @@ https://drive.google.com/file/d/1mVXZ5d0A4eU8KklSKvboTX_xnk0uzj6v/view?usp=shari
 
 # SRS
 https://docs.google.com/document/d/1nKJy3JTF8cL3dYEj-Wr06zLbyRmlUzm0A9PN_VnjKsM/edit?usp=sharing
+
+# Sprint 1 documentation
+https://docs.google.com/document/d/1A-GPMfJ37dMCzb9jm4Ry6bzVbLCmd6t4PbgSIH6tRvU/edit?usp=sharing
