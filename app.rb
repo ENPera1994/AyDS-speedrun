@@ -68,19 +68,8 @@ class App < Sinatra::Base
 		    [500, {}, 'Internal Server Error']
 		end
 
-		selected_choices = params[:choice_id] #array of arrays of ids (first is of question and second of choice)
-		selected_choices.each do |question_and_choice| #for each choice_id and the question it refeers to, we will
-			#create the response and load it in the database
-			
-			response = Response.create(question_id: question_and_choice[0], choice_id: question_and_choice[1], survey_id: survey.id)
-			
-			if response.save
-				[201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
-			else
-				[500, {}, 'Internal Server Error']
-			end
-		end
-		
+		survey.create_responses(params[:choice_id])
+
 		redirect to("/result/#{survey.id}") #finally when all responses are created we go to see the result
 	end
 
