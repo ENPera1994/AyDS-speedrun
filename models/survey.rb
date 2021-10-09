@@ -1,11 +1,10 @@
 class Survey < Sequel::Model
-	many_to_one :careers
+	one_to_many :scores
 	one_to_many :responses
 
 	def validate
     super
     errors.add(:username, 'cannot be empty') if !username || username.empty?
-    errors.add(:career_id, 'cannot be empty') if !career_id 
   end
 
   def before_destroy
@@ -15,7 +14,9 @@ class Survey < Sequel::Model
     end
   end
 
-  def result   #return an array with Career object, the best career and any other tied in score
+  #calculates the best careers based on the responses
+  #returns an array containing the best career and any other tied in score
+  def result
     topCareers = Array.new #array for best careers
     hashCareer = self.career_scores   #obtain scores
     maxScore = hashCareer.values.max  #score of best career
@@ -29,12 +30,13 @@ class Survey < Sequel::Model
     hashCareer.select! {|key,value| value == maxScore}
     
     hashCareer.keys.each do |career_id| #for every career id in hash
-      topCareers.append(Career.find(id: career_id)) #load Career object with this id
+      topCareers.append(Career.find(id: career_id)) #load Career object with this id in the array
     end
     return topCareers
   end
 
-  def career_scores   #return a hashmap with career_id as key and score as value
+  #return a hashmap with career_id as key and score as value
+  def career_scores
     hashCareer = Hash.new(0)  #create a hashmap for careers score initialized with 0
     
     for response in self.responses   #for every response to the current survey
@@ -47,6 +49,7 @@ class Survey < Sequel::Model
     return hashCareer   #if no career has scored, we get an emtpy hash
   end
 
+  #for a given collection of choices, creates responses and saves them in database
   def create_responses(selected_choices)
     selected_choices.each do |question_and_choice| 
       response = Response.create(question_id: question_and_choice[0], choice_id: question_and_choice[1], survey_id: self.id)
@@ -58,5 +61,11 @@ class Survey < Sequel::Model
       end
     end
   end
+
+  #returns true if the survey has been completed before and the first score doesn't have the null career
+  def completed
+    result = self.scores.first() #we get the first score of the survey
+    return result != nil && result.career_id != Career.first.id  #if there is a career and is not the null one, then 
+  end                                                            #survey has been completed
 
 end
