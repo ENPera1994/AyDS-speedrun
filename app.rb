@@ -36,7 +36,7 @@ class App < Sinatra::Base
 		survey = Survey.find(username: username) #looks for a survey with this username
 		
 		if !survey.nil? #such survey exists
-			if survey.career_id != Career.first.id  #the user has already done the test
+			if survey.completed?  #the user has already done the test
 				redirect "/result/#{survey.id}"   #user is redirected to its result
 			else
 				survey.destroy #it has the null career, so we restart its test
@@ -54,14 +54,14 @@ class App < Sinatra::Base
 
 	get '/result/:survey_id' do
 		@survey = Survey.find(:id => params[:survey_id])
-		@careers = @survey.result								#calculate survey result
-		@survey.update(career_id: @careers[0].id)  #stablish best career as survey's career_id
+		@careers = @survey.result			#calculate survey result
+		Score.create_scores(@careers,@survey.id)
 		erb :result
 	end
 
 	post '/responses/:username' do
-		survey = Survey.new(username: params[:username], career_id: Career.first.id) #we create the survey with the null
-																																								 #career temporarily
+		survey = Survey.new(username: params[:username]) #survey created
+
 		if survey.save  #store survey in database
 		    [201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
 		else
@@ -69,7 +69,6 @@ class App < Sinatra::Base
 		end
 
 		survey.create_responses(params[:choice_id])
-
 		redirect to("/result/#{survey.id}") #finally when all responses are created we go to see the result
 	end
 
