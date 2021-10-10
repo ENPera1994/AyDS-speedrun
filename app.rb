@@ -36,7 +36,7 @@ class App < Sinatra::Base
 		survey = Survey.find(username: username) #looks for a survey with this username
 		
 		if !survey.nil? #such survey exists
-			if survey.completed?  #the user has already done the test
+			if survey.completed  #the user has already done the test
 				redirect "/result/#{survey.id}"   #user is redirected to its result
 			else
 				survey.destroy #it has the null career, so we restart its test
@@ -54,8 +54,12 @@ class App < Sinatra::Base
 
 	get '/result/:survey_id' do
 		@survey = Survey.find(:id => params[:survey_id])
-		@careers = @survey.result			#calculate survey result
-		Score.create_scores(@careers,@survey.id)
+		if !@survey.completed					#first time survey is completed
+			@careers = @survey.result			#calculate survey result
+			Score.create_scores(@careers,@survey.id)
+		else		#in case survey has been completed and we are being redirected from the beginning
+			@careers = Score.get_careers(@survey)
+		end
 		erb :result
 	end
 
