@@ -12,6 +12,9 @@ class Survey < Sequel::Model
     for response in self.responses  #deletes every response asociated with the survey
       response.destroy
     end
+    for score in self.scores  #deltes scores
+      score.destroy
+    end
   end
 
   #calculates the best careers based on the responses
