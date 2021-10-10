@@ -16,4 +16,14 @@ class Score < Sequel::Model
     end
   end
 
+  #takes a survey and retunrs an array with all the scored careers
+  def self.get_careers(survey)
+    careers = Array.new
+    scores = survey.scores
+    scores.each do |score|
+      careers.append(Career.find(id: score.career_id))
+    end
+    return careers
+  end
+
 end
