@@ -25,5 +25,5 @@ class Score < Sequel::Model
     end
     return careers
   end
-
+ 
 end
