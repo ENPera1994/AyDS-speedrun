@@ -18,7 +18,7 @@
 			</nav>
 		</header>
 		<div id="banner">
-			<h1 >Bienvenido to AyDS speed run</h1>
+			<h1 >Bienvenido a AyDS speed run</h1>
 		</div>
 		<br>
 		<br>
@@ -31,6 +31,43 @@
 				<input type='text' name='username' placeholder='Nombre de Usuario' required>
 				<input class='button' type='submit' value='Continue'>
 			</form> 
+		</div>
+
+		<div id="formulario">
+			<form action='/' method='POST'>
+	
+				<br><h3>Consultar cantidad de resultados de una carrera entre dos fechas</h3>
+
+				<br><label>Primera Fecha</label>
+				<input type="date" id="first_date" name="first_date">
+				<br><label>Ultima Fecha</label>
+				<input type="date" id="last_date" name="last_date">
+
+				<br><label>Carrera</label>
+				<select name="career_name", id="Carrera">
+					<option>Carrera</option>
+					<option>Computacion</option>
+					<option>Veterinaria</option>
+					<option>Agronomia</option>
+					<option>Arquitectura</option>
+					<option>Arte</option>
+					<option>Economia</option>
+					<option>Educacion fisica</option>
+					<option>Filosofia</option>
+					<option>Fisica</option>
+					<option>Geologia</option>
+					<option>Historia</option>
+					<option>Literaruta</option>
+					<option>Matematicas</option>
+					<option>Medicina</option>
+					<option>Periodismo</option>
+					<option>Quimica</option>
+					<option>Sociologia</option>
+				</select>
+
+				<br><input class='button' type="submit" value='Consultar'><br><br><br>
+				
+			</form>
 		</div>
 
 	</body>
