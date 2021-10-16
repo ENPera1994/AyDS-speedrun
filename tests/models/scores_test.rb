@@ -1,4 +1,4 @@
-require File.expand_path '../../test_helper.rb', FILE
+require File.expand_path '../../test_helper.rb', __FILE__
 
 class ScoreTest < MiniTest::Unit::TestCase
     MiniTest::Unit::TestCase
