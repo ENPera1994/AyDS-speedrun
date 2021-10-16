@@ -9,7 +9,7 @@ class ResponseTest < MiniTest::Unit::TestCase
     career = Career.create(name: 'test')
     question = Question.create(name: 'name_est', description: 'test', number: 1, type: 'test')
     choice = Choice.create(text: 'choice_test', question_id: question.id)
-    survey = Survey.create(username: 'Pepe', career_id: career.id)
+    survey = Survey.create(username: 'Pepe')
     response = Response.new
 
     #Response has choice_id but not question_id and survey_id

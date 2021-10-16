@@ -2,6 +2,7 @@ require File.expand_path '../../test_helper.rb', __FILE__
 
 class SurveyTest < MiniTest::Unit::TestCase
   MiniTest::Unit::TestCase
+  
   def test_survey_must_has_username
     
     # Arrange
@@ -18,18 +19,18 @@ class SurveyTest < MiniTest::Unit::TestCase
   end
 
 
-  def test_survey_has_a_career
+  def test_survey_has_many_score
     
     # Arrange
-    career = Career.new
-    survey = Survey.new    
-    
+    survey = Survey.create(username: 'Test')
+    career = Career.create(name: 'Lic in tests')
     # Act
-    survey.career_id = career.id
-    
+    Score.create(career_id: career.id, survey_id: survey.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
+
     # Assert
-    assert_equal(survey.valid?, false)
-    
+    assert_equal(survey.scores.count, 3)
   end
 
 
@@ -39,7 +40,7 @@ class SurveyTest < MiniTest::Unit::TestCase
     career = Career.create(name: 'test')
     question = Question.create(name: 'name_est', description: 'test', number: 1, type: 'test')
     choice = Choice.create(text: 'choice_test', question_id: question.id)
-    survey = Survey.create(username: 'Pepe', career_id: career.id)
+    survey = Survey.create(username: 'Pepe')
     response1 = Response.create(survey_id: survey.id, question_id: question.id, choice_id: choice.id)
     response2 = Response.create(survey_id: survey.id, question_id: question.id, choice_id: choice.id)
     response3 = Response.create(survey_id: survey.id, question_id: question.id, choice_id: choice.id)

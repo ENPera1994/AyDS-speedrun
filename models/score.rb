@@ -2,6 +2,12 @@ class Score < Sequel::Model
   many_to_one :careers
   many_to_one :surveys
 
+  def validate
+    super
+    errors.add(:survey_id, 'cannot be empty')if !survey_id
+    errors.add(:career_id, 'cannot be empty')if !career_id
+  end
+
   #takes a collection of careers and an id and creates a Score object with
   #the given survey_id and career, for each career in the collection 
   #self makes the method static so we don't need an instance to invoke it
