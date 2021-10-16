@@ -23,15 +23,14 @@ class SurveyTest < MiniTest::Unit::TestCase
     
     # Arrange
     survey = Survey.create(username: 'Test')
-
+    career = Career.create(name: 'Lic in tests')
     # Act
-    Score.create(career_id: survey.id)
-    Score.create(career_id: survey.id)
-    Score.create(career_id: survey.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
 
     # Assert
-    assert_equal(survey.score.count, 3)
-    
+    assert_equal(survey.scores.count, 3)
   end
 
 
