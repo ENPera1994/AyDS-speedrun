@@ -6,14 +6,15 @@ class CareerTest < MiniTest::Unit::TestCase
   def test_career_has_many_score
     # Arrange
     career = Career.create(name: 'computacion')
+    survey = Survey.create(username: 'Test')
 
     # Act
-    Score.create(career_id: career.id)
-    Score.create(career_id: career.id)
-    Score.create(career_id: career.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
+    Score.create(career_id: career.id, survey_id: survey.id)
 
     # Assert
-    assert_equal(career.score.count, 3)
+    assert_equal(career.scores.count, 3)
   end
 
   def test_career_has_many_outcomes
