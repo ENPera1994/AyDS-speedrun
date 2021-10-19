@@ -1,3 +1,2 @@
 # Class diagrams
-https://drive.google.com/file/d/1mVXZ5d0A4eU8KklSKvboTX_xnk0uzj6v/view?usp=sharing
-
+https://drive.google.com/file/d/1OzPqhSxp0gitC0EBKr0VN9U4JmZrmqPT/view?usp=sharing
