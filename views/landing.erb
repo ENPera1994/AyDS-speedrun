@@ -67,6 +67,15 @@
 
 				<br><input class='button' type="submit" value='Consultar'><br><br><br>
 				
+				<% if @consulted %>
+					<% if @invalid_parameters %>
+						<p style="text-align:center;"> Por favor llena todos los campos de la consulta: </p>
+					<% else %>
+						<p style="text-align:center;"> Resultado de la consulta: </p>
+						<%= @career_name + ": " + @career_count + " resultados" %> <br>
+					<% end %>
+				<% end %>
+
 			</form>
 		</div>
 

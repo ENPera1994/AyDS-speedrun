@@ -2,7 +2,18 @@ require './models/init.rb'
 
 class App < Sinatra::Base
 	get '/' do
+		@consulted = false
 		@username = params[:username]
+		erb :landing
+	end
+
+	post '/' do
+		@consulted = true	#to know in landing if user made a consult and show errors properly
+		@career_count = Score.count_query(params[:first_date],params[:last_date],params[:career_name])
+		@career_name = params[:career_name]
+		
+		#if at least one parameter was not provided then parameters are invalid
+		@invalid_parameters = @career_count.nil?
 		erb :landing
 	end
 
