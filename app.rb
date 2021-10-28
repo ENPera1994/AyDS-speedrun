@@ -12,8 +12,6 @@ class App < Sinatra::Base
 		@career_count = Score.count_query(params[:first_date],params[:last_date],params[:career_name])
 		@career_name = params[:career_name]
 		
-		#if at least one parameter was not provided then parameters are invalid
-		@invalid_parameters = @career_count.nil?
 		erb :landing
 	end
 
