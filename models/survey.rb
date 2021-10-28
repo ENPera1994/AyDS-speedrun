@@ -52,18 +52,7 @@ class Survey < Sequel::Model
     return hashCareer   #if no career has scored, we get an emtpy hash
   end
 
-  #for a given collection of choices, creates responses and saves them in database
-  def create_responses(selected_choices)
-    selected_choices.each do |question_and_choice| 
-      response = Response.create(question_id: question_and_choice[0], choice_id: question_and_choice[1], survey_id: self.id)
-      
-      if response.save
-        [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
-      else
-        [500, {}, 'Internal Server Error']
-      end
-    end
-  end
+  
 
   #returns true if the survey has been completed before and the first score doesn't have the null career
   def completed

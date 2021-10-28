@@ -76,12 +76,12 @@ class App < Sinatra::Base
 		survey = Survey.new(username: params[:username]) #survey created
 
 		if survey.save  #store survey in database
-		    [201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
+			[201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
 		else
-		    [500, {}, 'Internal Server Error']
+			[500, {}, 'Internal Server Error']
 		end
 
-		survey.create_responses(params[:choice_id])
+		Response.create_responses(params[:choice_id], survey.id)
 		redirect to("/result/#{survey.id}") #finally when all responses are created we go to see the result
 	end
 
