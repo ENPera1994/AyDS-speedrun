@@ -25,12 +25,7 @@ class App < Sinatra::Base
 	post "/careers" do
 		data = request.body.read
 		career = Career.new(name: params[:name], description: params[:description] || params['name', 'description'])
-
-		if career.save
-			[201, {'Location' => "careers/#{career.id}"}, 'Career succesfully created']
-		else
-			[500, {}, 'Internal Server Error']
-		end
+		try_save(career,"Career succesfully created")
 	end
 
 	get '/careers/:id' do
@@ -74,14 +69,8 @@ class App < Sinatra::Base
 
 	post '/responses/:username' do
 		survey = Survey.new(username: params[:username]) #survey created
-
-		if survey.save  #store survey in database
-		    [201, {'Location' => "surveys/#{survey.id}"}, 'Survey succesfully created']
-		else
-		    [500, {}, 'Internal Server Error']
-		end
-
-		survey.create_responses(params[:choice_id])
+		try_save(survey,"Survey succesfully created")
+		Response.create_responses(params[:choice_id], survey.id)
 		redirect to("/result/#{survey.id}") #finally when all responses are created we go to see the result
 	end
 
@@ -94,11 +83,14 @@ class App < Sinatra::Base
 		request.body.rewind  # in case someone already read it
 		data = JSON.parse request.body.read
 		post = Post.new(description: data['desc'])
-		if post.save
-			[201, { 'Location' => "posts/#{post.id}" }, 'CREATED']
+		try_save(post,"CREATED")
+	end
+
+	def try_save(item_to_save, message)
+		if item_to_save.save
+			[201, {'Location' => "item_to_save/#{item_to_save.id}"}, 'message']
 		else
 			[500, {}, 'Internal Server Error']
 		end
 	end
-
 end
