@@ -70,7 +70,7 @@ class App < Sinatra::Base
 	post '/responses/:username' do
 		survey = Survey.new(username: params[:username]) #survey created
 		try_save(survey,"Survey succesfully created")
-		survey.create_responses(params[:choice_id])
+		Response.create_responses(params[:choice_id], survey.id)
 		redirect to("/result/#{survey.id}") #finally when all responses are created we go to see the result
 	end
 
