@@ -23,7 +23,6 @@ class App < Sinatra::Base
   end
 
   post '/careers' do
-    data = request.body.read
     career = Career.new(name: params[:name], description: params[:description] || params['name', 'description'])
     try_save(career, 'Career succesfully created')
   end
@@ -35,7 +34,6 @@ class App < Sinatra::Base
   end
 
   post '/surveys' do
-    data = request.body.read
     username = params[:username]
     survey = Survey.find(username: username) # looks for a survey with this username
 

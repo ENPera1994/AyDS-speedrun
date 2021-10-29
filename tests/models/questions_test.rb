@@ -38,7 +38,6 @@ class QuestionTest < MiniTest::Unit::TestCase
 
   def test_question_has_many_responses
     # Arrange
-    career = Career.create(name: 'career_test')
     question = Question.create(name: 'name_est', description: 'test', number: 1, type: 'test')
     survey = Survey.create(username: 'survey_test')
     choice = Choice.create(text: 'choice_test', question_id: question.id)

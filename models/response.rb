@@ -11,10 +11,10 @@ class Response < Sequel::Model
   end
 
   # for a given collection of choices, creates responses and saves them in database
-  def self.create_responses(selected_choices, surveyId)
+  def self.create_responses(selected_choices, survey_id)
     selected_choices.each do |question_and_choice|
       response = Response.create(question_id: question_and_choice[0], choice_id: question_and_choice[1],
-                                 survey_id: surveyId)
+                                 survey_id: survey_id)
 
       if response.save
         [201, { 'Location' => "responses/#{response.id}" }, 'CREATED']
