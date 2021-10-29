@@ -1,5 +1,5 @@
-require "bundler"
-require "sinatra"
+require 'bundler'
+require 'sinatra'
 require 'sequel'
 
 Bundler.require
@@ -10,10 +10,10 @@ DB = Sequel.connect(
   database: 'vocational-test',
   host: 'db',
   user: 'unicorn',
-  password: 'magic')
+  password: 'magic'
+)
 
 # Require and run the main app
 root = ::File.dirname(__FILE__)
 require ::File.join(root, 'app')
 run App.new
-

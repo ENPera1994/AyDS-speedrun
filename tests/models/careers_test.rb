@@ -1,4 +1,4 @@
-require File.expand_path '../../test_helper.rb', __FILE__
+require File.expand_path '../test_helper.rb', __dir__
 
 class CareerTest < MiniTest::Unit::TestCase
   MiniTest::Unit::TestCase
@@ -18,22 +18,20 @@ class CareerTest < MiniTest::Unit::TestCase
   end
 
   def test_career_has_many_outcomes
-
-    #Arrange
+    # Arrange
     career = Career.create(name: 'Licenciado en Test')
     question = Question.create(name: 'test', description: 'test', number: 1, type: 'test')
     choice = Choice.create(text: 'la choice', question_id: question.id)
     outcome = Outcome.create(career_id: career.id, choice_id: choice.id)
     outcome2 = Outcome.create(career_id: career.id, choice_id: choice.id)
     outcome3 = Outcome.create(career_id: career.id, choice_id: choice.id)
-    #Act
+    # Act
 
-    #Assert
+    # Assert
     assert_equal(career.outcomes.count, 3)
   end
 
   def test_career_has_name_no_null
-   
     # Arrange
     career = Career.new
 
@@ -45,7 +43,6 @@ class CareerTest < MiniTest::Unit::TestCase
   end
 
   def test_career_has_name_no_empty
-   
     # Arrange
     career = Career.new
 

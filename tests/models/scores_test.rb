@@ -1,14 +1,13 @@
-require File.expand_path '../../test_helper.rb', __FILE__
+require File.expand_path '../test_helper.rb', __dir__
 
 class ScoreTest < MiniTest::Unit::TestCase
-    MiniTest::Unit::TestCase
+  MiniTest::Unit::TestCase
 
-    def test_score_has_a_survey_and_career
+  def test_score_has_a_survey_and_career
+    career = Career.create(name: 'Lic in tests')
+    survey = Survey.create(username: 'Test')
+    score = Score.create(career_id: career.id, survey_id: survey.id)
 
-        career = Career.create(name: 'Lic in tests')
-        survey = Survey.create(username: 'Test')
-        score = Score.create(career_id: career.id, survey_id: survey.id)
-
-        assert_equal(score.valid?, true) 
-    end
+    assert_equal(score.valid?, true)
+  end
 end

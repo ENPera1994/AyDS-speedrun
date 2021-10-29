@@ -6,6 +6,6 @@ Sequel.migration do
   end
 
   down do
-    add_foreign_key :career_id, :careers, :null=>false
+    add_foreign_key :career_id, :careers, null: false
   end
 end

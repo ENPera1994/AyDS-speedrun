@@ -10,11 +10,12 @@ DB = Sequel.connect(
   database: 'vocational-test_test',
   host: 'testdb',
   user: 'unicorn',
-  password: 'magic')
+  password: 'magic'
+)
 
 class Minitest::HooksSpec
   def around
-    DB.transaction(:rollback=>:always, :auto_savepoint=>true){super}
+    DB.transaction(rollback: :always, auto_savepoint: true) { super }
   end
 end
 
