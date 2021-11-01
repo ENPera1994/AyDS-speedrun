@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ast (2.4.2)
     dotenv (2.7.5)
     ffi (1.15.0)
     listen (3.5.1)
@@ -12,6 +13,9 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.7)
+    parallel (1.21.0)
+    parser (3.0.2.0)
+      ast (~> 2.4.1)
     pg (1.2.3)
     puma (4.3.3)
       nio4r (~> 2.0)
@@ -20,11 +24,26 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rainbow (3.0.0)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    regexp_parser (2.1.1)
     rerun (0.13.1)
       listen (~> 3.0)
+    rexml (3.2.5)
+    rubocop (1.22.3)
+      parallel (~> 1.10)
+      parser (>= 3.0.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml
+      rubocop-ast (>= 1.12.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 3.0)
+    rubocop-ast (1.12.0)
+      parser (>= 3.0.1.1)
+    ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     sequel (5.43.0)
     sinatra (2.0.7)
@@ -33,6 +52,7 @@ GEM
       rack-protection (= 2.0.7)
       tilt (~> 2.0)
     tilt (2.0.10)
+    unicode-display_width (2.1.0)
 
 PLATFORMS
   ruby
@@ -45,6 +65,7 @@ DEPENDENCIES
   puma (= 4.3.3)
   rack-test
   rerun
+  rubocop
   sequel
   sinatra (= 2.0.7)
 
