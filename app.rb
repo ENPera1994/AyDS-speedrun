@@ -84,9 +84,9 @@ class App < Sinatra::Base
     try_save(post, 'CREATED')
   end
 
-  def try_save(item_to_save, _message)
+  def try_save(item_to_save, message)
     if item_to_save.save
-      [201, { 'Location' => "item_to_save/#{item_to_save.id}" }, 'message']
+      [201, { 'Location' => "item_to_save/#{item_to_save.id}" }, message]
     else
       [500, {}, 'Internal Server Error']
     end
